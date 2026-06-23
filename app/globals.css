@@ -1,26 +1,58 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-cream: #fbf9f4;
+  --color-green-deep: #2d5a27;
+  --color-green-mid: #3d7a34;
+  --color-green-hover: #245020;
+  --color-green-light: #e8f5e2;
+  --color-green-pale: #f2faf0;
+  --color-brown: #8b5a2b;
+  --color-brown-light: #f5ede3;
+  --color-brown-mid: #a0632f;
+  --font-playfair: var(--font-playfair), serif;
+  --font-inter: var(--font-inter), sans-serif;
+  --shadow-soft: 0 4px 24px rgba(45,90,39,0.10);
+  --shadow-card: 0 2px 16px rgba(45,90,39,0.08);
+  --shadow-card-hover: 0 8px 32px rgba(45,90,39,0.16);
+  --shadow-green: 0 4px 20px rgba(45,90,39,0.30);
+  --shadow-brown: 0 4px 20px rgba(139,90,43,0.25);
+  --animate-float: float 3s ease-in-out infinite;
+  --animate-fade-up: fadeInUp 0.6s ease forwards;
+  --animate-slide-right: slideInRight 0.4s ease forwards;
+  --animate-pulse-green: pulse-green 2s infinite;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-6px); }
 }
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(40px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes pulse-green {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(45,90,39,0.25); }
+  50%       { box-shadow: 0 0 0 8px rgba(45,90,39,0); }
+}
+@keyframes accordion-down {
+  from { height: 0; opacity: 0; }
+  to   { height: var(--radix-accordion-content-height, auto); opacity: 1; }
+}
+
+* { box-sizing: border-box; }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: #fbf9f4;
+  font-family: var(--font-inter), sans-serif;
+  color: #2c2c2c;
 }
+
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #f0ece4; }
+::-webkit-scrollbar-thumb { background: #2d5a27; border-radius: 3px; }
