@@ -58,6 +58,7 @@ const REVIEWS: Review[] = [
 
 export default function ReviewsSection() {
   const [currentIndex, setCurrentIndex] = useState(0)
+  const [isPlaying, setIsPlaying] = useState(true)
 
   const handlePrev = () => {
     setCurrentIndex((prev) => (prev === 0 ? REVIEWS.length - 1 : prev - 1))
@@ -66,6 +67,15 @@ export default function ReviewsSection() {
   const handleNext = () => {
     setCurrentIndex((prev) => (prev + 1) % REVIEWS.length)
   }
+
+  // Auto slide every 5 seconds
+  useEffect(() => {
+    if (!isPlaying) return
+    const timer = setInterval(() => {
+      setCurrentIndex((prev) => (prev + 1) % REVIEWS.length)
+    }, 5000)
+    return () => clearInterval(timer)
+  }, [isPlaying])
 
   // Get L and R indexes
   const prevIndex = (currentIndex === 0) ? REVIEWS.length - 1 : currentIndex - 1
@@ -76,7 +86,13 @@ export default function ReviewsSection() {
   const nextReview = REVIEWS[nextIndex]
 
   return (
-    <section className="mb-20 relative w-full overflow-hidden" id="reviews">
+    <section
+      className="mb-20 relative w-full overflow-hidden"
+      id="reviews"
+      onMouseEnter={() => setIsPlaying(false)}
+      onMouseLeave={() => setIsPlaying(true)}
+      onTouchStart={() => setIsPlaying(false)}
+    >
       {/* Title */}
       <div className="flex flex-col items-center text-center mb-10 px-4">
         <div
