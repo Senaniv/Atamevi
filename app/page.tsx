@@ -26,6 +26,7 @@ export default function Home() {
   const [cart, setCart] = useState<CartItem[]>([])
   const [quantities, setQuantities] = useState<Record<string, number>>({})
   const [search, setSearch] = useState('')
+  const [selectedCategory, setSelectedCategory] = useState<string>('all')
 
   // Load from local storage
   useEffect(() => {
@@ -46,14 +47,32 @@ export default function Home() {
 
   const filteredProducts = useMemo(() => {
     if (products.length === 0) return []
-    if (!search.trim()) return products
+    
+    let list = products
+
+    // Filter by selected category
+    if (selectedCategory !== 'all') {
+      if (selectedCategory === 'Ət Məhsulları') {
+        list = list.filter(p => p.category === 'Ət Məhsulları')
+      } else if (selectedCategory === 'Süd') {
+        list = list.filter(p => p.category === 'Süd Məhsulları' || p.category === 'Süd-Yumurta')
+      } else if (selectedCategory === 'Meyvə') {
+        list = list.filter(p => p.category === 'Meyvə')
+      } else if (selectedCategory === 'Tərəvəz') {
+        list = list.filter(p => p.category === 'Tərəvəz')
+      } else if (selectedCategory === 'Çərəz') {
+        list = list.filter(p => p.category === 'Quru Meyvə' || p.category === 'Bal-Mum')
+      }
+    }
+
+    if (!search.trim()) return list
     const q = search.toLowerCase()
-    return products.filter(
+    return list.filter(
       (p) =>
         p.title.toLowerCase().includes(q) ||
         p.category.toLowerCase().includes(q)
     )
-  }, [search, products])
+  }, [search, products, selectedCategory])
 
   const updateQuantity = (product: Product, qty: number) => {
     const rounded = Math.round(qty * 100) / 100
@@ -96,6 +115,37 @@ export default function Home() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-32">
         <DeliveryBanner />
         <SearchBar value={search} onChange={setSearch} />
+
+        {/* Category Filters */}
+        <div className="flex flex-wrap items-center justify-center gap-2 mb-8 mt-2">
+          {[
+            { id: 'all', label: 'Bütün məhsullar', emoji: '🌾' },
+            { id: 'Ət Məhsulları', label: 'Ət məhsulları', emoji: '🥩' },
+            { id: 'Süd', label: 'Süd məhsulları', emoji: '🥛' },
+            { id: 'Meyvə', label: 'Meyvələr', emoji: '🍒' },
+            { id: 'Tərəvəz', label: 'Tərəvəzlər', emoji: '🥔' },
+            { id: 'Çərəz', label: 'Çərəz & Bal', emoji: '🍯' },
+          ].map((cat) => {
+            const isActive = selectedCategory === cat.id
+            return (
+              <button
+                key={cat.id}
+                onClick={() => setSelectedCategory(cat.id)}
+                className="flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-bold transition-all duration-200 active:scale-95 cursor-pointer border"
+                style={{
+                  backgroundColor: isActive ? '#2d5a27' : 'white',
+                  color: isActive ? 'white' : '#1a2e17',
+                  borderColor: isActive ? '#2d5a27' : 'rgba(45,90,39,0.12)',
+                  boxShadow: isActive ? '0 4px 12px rgba(45,90,39,0.20)' : 'none',
+                }}
+              >
+                <span>{cat.emoji}</span>
+                <span>{cat.label}</span>
+              </button>
+            )
+          })}
+        </div>
+
         <ProductGrid
           products={filteredProducts}
           quantities={quantities}
