@@ -131,7 +131,7 @@ export default function Home() {
               <button
                 key={cat.id}
                 onClick={() => setSelectedCategory(cat.id)}
-                className="flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-bold transition-all duration-200 active:scale-95 cursor-pointer border"
+                className="flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-bold transition-all duration-200 active:scale-95 cursor-pointer border"
                 style={{
                   backgroundColor: isActive ? '#2d5a27' : 'white',
                   color: isActive ? 'white' : '#1a2e17',
