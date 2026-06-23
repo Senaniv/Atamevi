@@ -1,6 +1,4 @@
-'use client'
-
-import { useRef, useState } from 'react'
+import { useRef, useState, useEffect } from 'react'
 import { ShoppingBasket, PackagePlus, CheckCircle, ChevronLeft, ChevronRight } from 'lucide-react'
 import { Product, ReadyBasketDef } from '@/lib/data'
 
@@ -12,6 +10,7 @@ interface ReadyBasketsProps {
 
 export default function ReadyBaskets({ baskets, products, onAdd }: ReadyBasketsProps) {
   const [added, setAdded] = useState<Record<string, boolean>>({})
+  const [isPlaying, setIsPlaying] = useState(true)
   const scrollRef = useRef<HTMLDivElement>(null)
 
   const handleAdd = (basketId: string, items: { productId: string; qty: number }[]) => {
@@ -35,8 +34,34 @@ export default function ReadyBaskets({ baskets, products, onAdd }: ReadyBasketsP
     }
   }
 
+  // Auto-play sliding loop
+  useEffect(() => {
+    if (!isPlaying || baskets.length <= 1) return
+
+    const interval = setInterval(() => {
+      if (scrollRef.current) {
+        const { scrollLeft, scrollWidth, clientWidth } = scrollRef.current
+        const maxScroll = scrollWidth - clientWidth
+        if (scrollLeft >= maxScroll - 5) {
+          // Loop back to start
+          scrollRef.current.scrollTo({ left: 0, behavior: 'smooth' })
+        } else {
+          // Scroll next
+          scrollRef.current.scrollTo({ left: scrollLeft + clientWidth * 0.8, behavior: 'smooth' })
+        }
+      }
+    }, 5000)
+
+    return () => clearInterval(interval)
+  }, [isPlaying, baskets])
+
   return (
-    <section className="mb-16 relative" id="baskets">
+    <section
+      className="mb-16 relative"
+      id="baskets"
+      onClick={() => setIsPlaying(false)}
+      onTouchStart={() => setIsPlaying(false)}
+    >
       {/* Title */}
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-3">
@@ -59,24 +84,32 @@ export default function ReadyBaskets({ baskets, products, onAdd }: ReadyBasketsP
           </div>
         </div>
 
-        {/* Carousel controls (Hidden on mobile if not scrollable, shown on desktop if > 3 items) */}
-        {baskets.length > 3 && (
-          <div className="hidden sm:flex gap-2">
+        {/* Carousel controls (Visible on all devices, also mobile) */}
+        {baskets.length > 1 && (
+          <div className="flex gap-2">
             <button
-              onClick={() => scroll('left')}
-              className="w-10 h-10 rounded-full border flex items-center justify-center text-green-deep hover:bg-green-pale transition-all hover:scale-105 active:scale-95"
-              style={{ borderColor: 'rgba(45,90,39,0.15)', backgroundColor: 'white' }}
+              onClick={(e) => {
+                e.stopPropagation()
+                setIsPlaying(false)
+                scroll('left')
+              }}
+              className="w-9 h-9 sm:w-10 sm:h-10 rounded-full border flex items-center justify-center text-green-deep hover:bg-green-pale transition-all hover:scale-105 active:scale-95 cursor-pointer bg-white"
+              style={{ borderColor: 'rgba(45,90,39,0.15)' }}
               aria-label="Sola sürüşdür"
             >
-              <ChevronLeft size={20} />
+              <ChevronLeft size={18} />
             </button>
             <button
-              onClick={() => scroll('right')}
-              className="w-10 h-10 rounded-full border flex items-center justify-center text-green-deep hover:bg-green-pale transition-all hover:scale-105 active:scale-95"
-              style={{ borderColor: 'rgba(45,90,39,0.15)', backgroundColor: 'white' }}
+              onClick={(e) => {
+                e.stopPropagation()
+                setIsPlaying(false)
+                scroll('right')
+              }}
+              className="w-9 h-9 sm:w-10 sm:h-10 rounded-full border flex items-center justify-center text-green-deep hover:bg-green-pale transition-all hover:scale-105 active:scale-95 cursor-pointer bg-white"
+              style={{ borderColor: 'rgba(45,90,39,0.15)' }}
               aria-label="Sağa sürüşdür"
             >
-              <ChevronRight size={20} />
+              <ChevronRight size={18} />
             </button>
           </div>
         )}
@@ -85,7 +118,7 @@ export default function ReadyBaskets({ baskets, products, onAdd }: ReadyBasketsP
       {/* Slider View */}
       <div
         ref={scrollRef}
-        className="flex gap-6 overflow-x-auto pb-6 pt-2 scrollbar-none snap-x snap-mandatory"
+        className="flex gap-4 sm:gap-6 overflow-x-auto pb-6 pt-2 scrollbar-none snap-x snap-mandatory"
         style={{
           scrollbarWidth: 'none',
           msOverflowStyle: 'none',

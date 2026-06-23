@@ -12,6 +12,7 @@ import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import DeliveryBanner from '@/components/DeliveryBanner'
 import AboutSection from '@/components/AboutSection'
+import ReviewsSection from '@/components/ReviewsSection'
 import {
   CartItem,
   Product,
@@ -159,6 +160,7 @@ export default function Home() {
         />
         <AboutSection />
         <BlogSection />
+        <ReviewsSection />
         <FAQSection />
       </div>
       <Footer />

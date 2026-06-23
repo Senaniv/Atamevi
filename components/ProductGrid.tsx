@@ -42,7 +42,7 @@ export default function ProductGrid({ products, quantities, onAdd, onUpdateQty }
   }
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
+    <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6 mb-16">
       {products.map((product, idx) => {
         const qty = quantities[product.id] ?? 0
         const inCart = qty > 0
@@ -51,7 +51,7 @@ export default function ProductGrid({ products, quantities, onAdd, onUpdateQty }
         return (
           <article
             key={product.id}
-            className="group rounded-3xl overflow-hidden border transition-all duration-300 hover:-translate-y-1.5 hover:shadow-card-hover"
+            className="group rounded-2xl sm:rounded-3xl overflow-hidden border transition-all duration-300 hover:-translate-y-1.5 hover:shadow-card-hover"
             style={{
               backgroundColor: 'white',
               borderColor: inCart ? 'rgba(45,90,39,0.35)' : 'rgba(45,90,39,0.10)',
@@ -63,7 +63,7 @@ export default function ProductGrid({ products, quantities, onAdd, onUpdateQty }
           >
             {/* Image placeholder */}
             <div
-              className="h-44 flex items-center justify-center text-6xl relative overflow-hidden"
+              className="h-32 sm:h-44 flex items-center justify-center text-4xl sm:text-6xl relative overflow-hidden"
               style={{
                 background:
                   'linear-gradient(135deg, #f2faf0 0%, #e8f5e2 100%)',
@@ -80,7 +80,7 @@ export default function ProductGrid({ products, quantities, onAdd, onUpdateQty }
               )}
               {tag && (
                 <span
-                  className="absolute top-3 right-3 text-xs font-semibold px-2.5 py-1 rounded-full shadow-sm"
+                  className="absolute top-2 right-2 text-[9px] sm:text-xs font-semibold px-1.5 sm:px-2.5 py-0.5 sm:py-1 rounded-full shadow-sm"
                   style={{ backgroundColor: tag.bg, color: tag.text }}
                 >
                   {product.tag}
@@ -89,42 +89,42 @@ export default function ProductGrid({ products, quantities, onAdd, onUpdateQty }
             </div>
 
             {/* Content */}
-            <div className="p-5">
+            <div className="p-3 sm:p-5">
               {/* Category */}
               <span
-                className="text-xs font-semibold uppercase tracking-wide"
+                className="text-[9px] sm:text-xs font-semibold uppercase tracking-wide"
                 style={{ color: '#8b5a2b' }}
               >
                 {product.category}
               </span>
 
               <h3
-                className="font-bold text-lg mt-1 mb-1"
+                className="font-bold text-sm sm:text-lg mt-0.5 sm:mt-1 mb-1 truncate"
                 style={{ fontFamily: "'Playfair Display', serif", color: '#1a2e17' }}
               >
                 {product.title}
               </h3>
 
-              <p className="text-xs leading-relaxed mb-4" style={{ color: '#6b7280' }}>
+              <p className="text-xs leading-relaxed mb-3 hidden sm:block" style={{ color: '#6b7280' }}>
                 {product.description}
               </p>
 
               {/* Price */}
-              <div className="flex items-end justify-between mb-4">
+              <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-1 mb-3">
                 <div>
                   <span
-                    className="text-xl font-bold"
+                    className="text-sm sm:text-xl font-bold"
                     style={{ color: '#8b5a2b', fontFamily: "'Playfair Display', serif" }}
                   >
                     {product.price.toFixed(2)} AZN
                   </span>
-                  <span className="text-xs ml-1" style={{ color: '#9ca3af' }}>
+                  <span className="text-[10px] sm:text-xs ml-0.5 sm:ml-1" style={{ color: '#9ca3af' }}>
                     / {product.unit}
                   </span>
                 </div>
                 {inCart && (
                   <span
-                    className="text-xs font-semibold px-2.5 py-1 rounded-full"
+                    className="text-[9px] sm:text-xs font-semibold px-1.5 sm:px-2.5 py-0.5 sm:py-1 rounded-full w-max"
                     style={{ backgroundColor: '#e8f5e2', color: '#2d5a27' }}
                   >
                     ✓ Səbətdə
@@ -136,31 +136,31 @@ export default function ProductGrid({ products, quantities, onAdd, onUpdateQty }
               {!inCart ? (
                 <button
                   onClick={() => onAdd(product)}
-                  className="w-full flex items-center justify-center gap-2 py-3 rounded-2xl font-semibold text-sm text-white transition-all hover:opacity-90 active:scale-95"
+                  className="w-full flex items-center justify-center gap-1.5 py-2 sm:py-3 rounded-xl sm:rounded-2xl font-semibold text-xs sm:text-sm text-white transition-all hover:opacity-90 active:scale-95"
                   style={{
                     backgroundColor: '#2d5a27',
                     boxShadow: '0 4px 14px rgba(45,90,39,0.28)',
                   }}
                 >
-                  <ShoppingBasket size={16} />
+                  <ShoppingBasket size={14} />
                   Səbətə At
                 </button>
               ) : (
                 <div
-                  className="flex items-center rounded-2xl overflow-hidden border"
+                  className="flex items-center rounded-xl sm:rounded-2xl overflow-hidden border"
                   style={{ borderColor: 'rgba(45,90,39,0.20)' }}
                 >
                   <button
                     onClick={() => onUpdateQty(product, qty - product.step)}
-                    className="flex-1 flex items-center justify-center py-3 transition-colors hover:bg-red-50"
+                    className="flex-1 flex items-center justify-center py-2 sm:py-3 transition-colors hover:bg-red-50"
                     style={{ color: '#dc2626' }}
                     aria-label="Azalt"
                   >
-                    <Minus size={16} strokeWidth={2.5} />
+                    <Minus size={14} strokeWidth={2.5} />
                   </button>
 
                   <div
-                    className="flex-[2] text-center py-3 font-bold text-sm select-none"
+                    className="flex-[2] text-center py-2 sm:py-3 font-bold text-xs sm:text-sm select-none"
                     style={{ color: '#2d5a27', backgroundColor: '#f2faf0' }}
                   >
                     {formatQty(qty, product.unit)}
@@ -168,11 +168,11 @@ export default function ProductGrid({ products, quantities, onAdd, onUpdateQty }
 
                   <button
                     onClick={() => onUpdateQty(product, qty + product.step)}
-                    className="flex-1 flex items-center justify-center py-3 transition-colors hover:bg-green-50"
+                    className="flex-1 flex items-center justify-center py-2 sm:py-3 transition-colors hover:bg-green-50"
                     style={{ color: '#2d5a27' }}
                     aria-label="Artır"
                   >
-                    <Plus size={16} strokeWidth={2.5} />
+                    <Plus size={14} strokeWidth={2.5} />
                   </button>
                 </div>
               )}
