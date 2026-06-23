@@ -109,7 +109,7 @@ export default function Home() {
   }
 
   return (
-    <main className="min-h-screen" style={{ backgroundColor: '#fbf9f4' }}>
+    <main className="min-h-screen">
       <Navbar cartCount={cart.reduce((a, c) => a + c.qty, 0)} />
       <HeroSection productCount={products.length || 9} />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-32">

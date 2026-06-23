@@ -48,7 +48,7 @@
 * { box-sizing: border-box; }
 
 body {
-  background-image: linear-gradient(rgba(251, 249, 244, 0.94) 0%, rgba(251, 249, 244, 0.94) 100%), url('/site-bg.jpg');
+  background-image: linear-gradient(rgba(251, 249, 244, 0.88) 0%, rgba(251, 249, 244, 0.88) 100%), url('/site-bg.jpg');
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
