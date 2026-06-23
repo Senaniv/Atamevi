@@ -1,11 +1,19 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { ChevronDown, HelpCircle } from 'lucide-react'
-import { FAQ_ITEMS } from '@/lib/data'
+import { getStoredFAQs, FAQItem } from '@/lib/data'
 
 export default function FAQSection() {
+  const [faqs, setFaqs] = useState<FAQItem[]>([])
   const [openId, setOpenId] = useState<string | null>(null)
+
+  useEffect(() => {
+    setFaqs(getStoredFAQs())
+    const handleFaqsChange = () => setFaqs(getStoredFAQs())
+    window.addEventListener('atam_faqs_change', handleFaqsChange)
+    return () => window.removeEventListener('atam_faqs_change', handleFaqsChange)
+  }, [])
 
   const toggle = (id: string) => setOpenId((prev) => (prev === id ? null : id))
 
@@ -32,7 +40,7 @@ export default function FAQSection() {
       </div>
 
       <div className="space-y-3">
-        {FAQ_ITEMS.map((item) => {
+        {faqs.map((item) => {
           const isOpen = openId === item.id
           return (
             <div

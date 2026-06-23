@@ -251,7 +251,13 @@ export const BLOG_POSTS = [
   },
 ]
 
-export const FAQ_ITEMS = [
+export interface FAQItem {
+  id: string
+  question: string
+  answer: string
+}
+
+export const FAQ_ITEMS: FAQItem[] = [
   {
     id: 'faq1',
     question: 'Tovuza çatdırılma neçə günə aparır?',
@@ -277,6 +283,22 @@ export const FAQ_ITEMS = [
       'Hər məhsul bilavasitə Tovuz kənd ailələrindən, mənşəyi məlum fermalardan temin edilir. Çatdırılma zamanı hər hansı keyfiyyət problemi yaranarsa, sifarişi 24 saat ərzində tam geri qaytarırıq.',
   },
 ]
+
+export function getStoredFAQs(): FAQItem[] {
+  if (typeof window === 'undefined') return FAQ_ITEMS
+  const data = localStorage.getItem('atam_faqs')
+  if (data) {
+    try { return JSON.parse(data) } catch (e) { return FAQ_ITEMS }
+  }
+  localStorage.setItem('atam_faqs', JSON.stringify(FAQ_ITEMS))
+  return FAQ_ITEMS
+}
+
+export function setStoredFAQs(faqs: FAQItem[]) {
+  if (typeof window === 'undefined') return
+  localStorage.setItem('atam_faqs', JSON.stringify(faqs))
+  window.dispatchEvent(new Event('atam_faqs_change'))
+}
 
 // Local Storage Helper Utilities
 export function getStoredProducts(): Product[] {

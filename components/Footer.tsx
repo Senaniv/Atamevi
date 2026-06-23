@@ -112,6 +112,22 @@ export default function Footer() {
             ))}
           </div>
         </div>
+
+        {/* Pixel Digital Services Special Attribution Bar */}
+        <div className="mt-6 pt-4 border-t text-center text-xs font-medium tracking-wide" style={{ borderColor: 'rgba(255,255,255,0.06)' }}>
+          <p className="inline-flex flex-wrap items-center justify-center gap-1.5 px-4 py-2 rounded-full bg-black/30 border border-white/5 text-white/50 shadow-inner">
+            <span>Sayt</span>
+            <a
+              href="https://www.instagram.com/pixel_digital_services/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[#E3232A] hover:text-[#ff383e] font-extrabold underline transition-all duration-300 hover:scale-105 inline-flex items-center gap-1 uppercase tracking-wider"
+            >
+              Pixel Digital Services
+            </a>
+            <span>tərəfindən hazırlanmışdır.</span>
+          </p>
+        </div>
       </div>
     </footer>
   )

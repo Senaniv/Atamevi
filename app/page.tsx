@@ -11,6 +11,7 @@ import FloatingBasket from '@/components/FloatingBasket'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import DeliveryBanner from '@/components/DeliveryBanner'
+import AboutSection from '@/components/AboutSection'
 import {
   CartItem,
   Product,
@@ -106,6 +107,7 @@ export default function Home() {
           products={products}
           onAdd={addBasketToCart}
         />
+        <AboutSection />
         <BlogSection />
         <FAQSection />
       </div>

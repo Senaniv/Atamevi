@@ -15,7 +15,8 @@ import {
   DollarSign,
   X,
   Layers,
-  Image as ImageIcon
+  Image as ImageIcon,
+  HelpCircle
 } from 'lucide-react'
 import Link from 'next/link'
 import {
@@ -28,33 +29,41 @@ import {
   getStoredOrders,
   setStoredOrders,
   Order,
-  Unit
+  Unit,
+  FAQItem,
+  getStoredFAQs,
+  setStoredFAQs
 } from '@/lib/data'
 
 export default function AdminPanel() {
-  const [activeTab, setActiveTab] = useState<'stats' | 'products' | 'baskets' | 'orders'>('stats')
+  const [activeTab, setActiveTab] = useState<'stats' | 'products' | 'baskets' | 'orders' | 'faqs'>('stats')
   const [products, setProducts] = useState<Product[]>([])
   const [baskets, setBaskets] = useState<ReadyBasketDef[]>([])
   const [orders, setOrders] = useState<Order[]>([])
+  const [faqs, setFaqs] = useState<FAQItem[]>([])
 
   // Load from local storage
   useEffect(() => {
     setProducts(getStoredProducts())
     setBaskets(getStoredBaskets())
     setOrders(getStoredOrders())
+    setFaqs(getStoredFAQs())
 
     const handleProductsChange = () => setProducts(getStoredProducts())
     const handleBasketsChange = () => setBaskets(getStoredBaskets())
     const handleOrdersChange = () => setOrders(getStoredOrders())
+    const handleFaqsChange = () => setFaqs(getStoredFAQs())
 
     window.addEventListener('atam_products_change', handleProductsChange)
     window.addEventListener('atam_baskets_change', handleBasketsChange)
     window.addEventListener('atam_orders_change', handleOrdersChange)
+    window.addEventListener('atam_faqs_change', handleFaqsChange)
 
     return () => {
       window.removeEventListener('atam_products_change', handleProductsChange)
       window.removeEventListener('atam_baskets_change', handleBasketsChange)
       window.removeEventListener('atam_orders_change', handleOrdersChange)
+      window.removeEventListener('atam_faqs_change', handleFaqsChange)
     }
   }, [])
 
@@ -83,6 +92,65 @@ export default function AdminPanel() {
   const totalSales = orders.reduce((sum, o) => sum + o.total, 0)
   const pendingOrders = orders.filter(o => o.status === 'Gözləmədə').length
   const totalProducts = products.length
+
+  // 3. FAQ FORM STATES
+  const [showFaqModal, setShowFaqModal] = useState(false)
+  const [editingFaq, setEditingFaq] = useState<FAQItem | null>(null)
+  const [faqQuestion, setFaqQuestion] = useState('')
+  const [faqAnswer, setFaqAnswer] = useState('')
+
+  // FAQ CRUD Handlers
+  const handleSaveFaq = (e: React.FormEvent) => {
+    e.preventDefault()
+    if (!faqQuestion || !faqAnswer) return
+
+    let updatedFaqs: FAQItem[]
+    if (editingFaq) {
+      updatedFaqs = faqs.map(f => f.id === editingFaq.id ? {
+        ...f,
+        question: faqQuestion,
+        answer: faqAnswer
+      } : f)
+    } else {
+      const newFaq: FAQItem = {
+        id: `faq-${Date.now()}`,
+        question: faqQuestion,
+        answer: faqAnswer
+      }
+      updatedFaqs = [...faqs, newFaq]
+    }
+
+    setFaqs(updatedFaqs)
+    setStoredFAQs(updatedFaqs)
+    closeFaqModal()
+  }
+
+  const openAddFaqModal = () => {
+    setEditingFaq(null)
+    setFaqQuestion('')
+    setFaqAnswer('')
+    setShowFaqModal(true)
+  }
+
+  const openEditFaqModal = (f: FAQItem) => {
+    setEditingFaq(f)
+    setFaqQuestion(f.question)
+    setFaqAnswer(f.answer)
+    setShowFaqModal(true)
+  }
+
+  const closeFaqModal = () => {
+    setShowFaqModal(false)
+    setEditingFaq(null)
+  }
+
+  const handleDeleteFaq = (id: string) => {
+    if (confirm('Bu sualı silmək istədiyinizdən əminsiniz?')) {
+      const updated = faqs.filter(f => f.id !== id)
+      setFaqs(updated)
+      setStoredFAQs(updated)
+    }
+  }
 
   // File Upload Helper to convert image file to Base64 string
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>, isBasket: boolean = false) => {
@@ -333,6 +401,17 @@ export default function AdminPanel() {
                 </span>
               )}
             </button>
+            <button
+              onClick={() => setActiveTab('faqs')}
+              className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-all ${
+                activeTab === 'faqs'
+                  ? 'bg-green-deep text-white shadow-sm'
+                  : 'text-green-deep hover:bg-green-pale'
+              }`}
+            >
+              <HelpCircle size={16} />
+              Tez-tez Verilən Suallar
+            </button>
           </nav>
         </div>
 
@@ -357,6 +436,7 @@ export default function AdminPanel() {
               {activeTab === 'products' && 'Məhsulların İdarə Edilməsi'}
               {activeTab === 'baskets' && 'Hazır Səbətlərin İdarə Edilməsi'}
               {activeTab === 'orders' && 'Sifariş Siyahısı'}
+              {activeTab === 'faqs' && 'Tez-tez Verilən Sualların İdarə Edilməsi'}
             </h1>
             <p className="text-xs text-gray-500 mt-1">
               Tovuz kənd təsərrüfatı mağazasının idarəetmə konsolu
@@ -380,6 +460,16 @@ export default function AdminPanel() {
             >
               <Plus size={16} />
               Yeni Səbət Yığ
+            </button>
+          )}
+
+          {activeTab === 'faqs' && (
+            <button
+              onClick={openAddFaqModal}
+              className="inline-flex items-center gap-2 bg-green-deep text-white font-semibold text-sm px-4 py-2.5 rounded-xl shadow-sm hover:bg-green-hover transition-colors active:scale-95"
+            >
+              <Plus size={16} />
+              Yeni Sual Əlavə Et
             </button>
           )}
         </header>
@@ -655,6 +745,51 @@ export default function AdminPanel() {
                 </div>
               </div>
             ))}
+          </div>
+        )}
+
+        {/* 5. FAQs TAB */}
+        {activeTab === 'faqs' && (
+          <div className="bg-white rounded-3xl border border-green-deep/10 shadow-sm overflow-hidden animate-fade-up">
+            <div className="overflow-x-auto">
+              <table className="w-full border-collapse text-left">
+                <thead>
+                  <tr className="border-b border-green-deep/10 bg-green-pale/35">
+                    <th className="px-6 py-4 text-xs font-bold text-green-deep uppercase tracking-wider">Sual</th>
+                    <th className="px-6 py-4 text-xs font-bold text-green-deep uppercase tracking-wider">Cavab</th>
+                    <th className="px-6 py-4 text-xs font-bold text-green-deep uppercase tracking-wider text-right">Əməliyyatlar</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-green-deep/5">
+                  {faqs.map(f => (
+                    <tr key={f.id} className="hover:bg-green-pale/10 transition-colors">
+                      <td className="px-6 py-4 text-sm font-semibold text-gray-800 max-w-xs truncate" title={f.question}>
+                        {f.question}
+                      </td>
+                      <td className="px-6 py-4 text-sm text-gray-500 max-w-md truncate" title={f.answer}>
+                        {f.answer}
+                      </td>
+                      <td className="px-6 py-4 text-right space-x-2">
+                        <button
+                          onClick={() => openEditFaqModal(f)}
+                          className="inline-flex p-2 rounded-lg hover:bg-green-pale text-green-deep transition-colors"
+                          title="Sualı Redaktə Et"
+                        >
+                          <Edit2 size={14} />
+                        </button>
+                        <button
+                          onClick={() => handleDeleteFaq(f.id)}
+                          className="inline-flex p-2 rounded-lg hover:bg-red-50 text-red-600 transition-colors"
+                          title="Sil"
+                        >
+                          <Trash2 size={14} />
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
         )}
       </main>
@@ -933,6 +1068,51 @@ export default function AdminPanel() {
 
               <div className="flex gap-3 justify-end pt-4 border-t border-gray-100">
                 <button type="button" onClick={closeBasketModal} className="px-4 py-2 rounded-xl text-xs text-gray-500 hover:bg-gray-50">Ləğv Et</button>
+                <button type="submit" className="px-5 py-2.5 rounded-xl text-xs font-bold text-white bg-green-deep hover:bg-green-hover transition-colors">Yadda Saxla</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* FAQ Add / Edit Modal */}
+      {showFaqModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4 backdrop-blur-sm">
+          <div className="bg-white rounded-3xl shadow-2xl max-w-lg w-full overflow-hidden border border-green-deep/10">
+            <div className="flex items-center justify-between px-6 py-4 bg-green-deep text-white">
+              <h3 className="font-bold text-base font-playfair">
+                {editingFaq ? 'Sualı Redaktə Et' : 'Yeni Sual Əlavə Et'}
+              </h3>
+              <button onClick={closeFaqModal} className="text-white/70 hover:text-white transition-opacity">
+                <X size={20} />
+              </button>
+            </div>
+
+            <form onSubmit={handleSaveFaq} className="p-6 space-y-4">
+              <div>
+                <label className="block text-xs font-semibold text-gray-500 mb-1">Sual</label>
+                <input
+                  type="text"
+                  required
+                  value={faqQuestion}
+                  onChange={e => setFaqQuestion(e.target.value)}
+                  className="w-full px-4 py-2.5 rounded-xl border border-gray-200 outline-none text-sm focus:border-green-deep"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-semibold text-gray-500 mb-1">Cavab</label>
+                <textarea
+                  rows={4}
+                  required
+                  value={faqAnswer}
+                  onChange={e => setFaqAnswer(e.target.value)}
+                  className="w-full px-4 py-2.5 rounded-xl border border-gray-200 outline-none text-sm focus:border-green-deep resize-none"
+                />
+              </div>
+
+              <div className="flex gap-3 justify-end pt-4 border-t border-gray-100">
+                <button type="button" onClick={closeFaqModal} className="px-4 py-2 rounded-xl text-xs text-gray-500 hover:bg-gray-50">Ləğv Et</button>
                 <button type="submit" className="px-5 py-2.5 rounded-xl text-xs font-bold text-white bg-green-deep hover:bg-green-hover transition-colors">Yadda Saxla</button>
               </div>
             </form>
