@@ -48,7 +48,10 @@
 * { box-sizing: border-box; }
 
 body {
-  background-color: #fbf9f4;
+  background-image: linear-gradient(rgba(251, 249, 244, 0.94) 0%, rgba(251, 249, 244, 0.94) 100%), url('/site-bg.jpg');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
   font-family: var(--font-inter), sans-serif;
   color: #2c2c2c;
 }

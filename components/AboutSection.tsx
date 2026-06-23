@@ -82,16 +82,16 @@ export default function AboutSection() {
 
           <div className="relative z-10 space-y-6">
             <div>
-              <span className="px-3 py-1 rounded-full bg-white/10 text-white/90 text-[10px] font-bold tracking-widest uppercase">
+              <span className="px-3 py-1.5 rounded-full bg-white/15 text-white text-xs md:text-sm font-extrabold tracking-widest uppercase">
                 ÇATDIRILMA XİDMƏTİ
               </span>
               <h3 
-                className="text-2xl font-bold text-white mt-3" 
+                className="text-2xl md:text-3xl font-bold text-white mt-4" 
                 style={{ fontFamily: "'Playfair Display', serif" }}
               >
                 Hörmətli müştərilər!
               </h3>
-              <p className="text-xs text-white/70 mt-1 font-semibold">
+              <p className="text-sm md:text-base text-white/90 mt-2 font-medium">
                 Kənddən evinizə sürətli və təhlükəsiz çatdırılma şərtlərimiz:
               </p>
             </div>
@@ -105,11 +105,11 @@ export default function AboutSection() {
                     <span className="text-xl">🚌</span>
                   </div>
                   <div>
-                    <h5 className="font-bold text-xs text-white">Avtovağzala Çatdırılma</h5>
-                    <p className="text-[10px] text-white/50 mt-0.5">Sifarişi avtovağzalda təhvil almaq</p>
+                    <h5 className="font-bold text-sm md:text-base text-white">Avtovağzala Çatdırılma</h5>
+                    <p className="text-xs md:text-sm text-white/80 mt-0.5">Sifarişi avtovağzalda təhvil almaq</p>
                   </div>
                 </div>
-                <span className="px-3 py-1 rounded-lg bg-green-500 text-white text-[11px] font-black uppercase tracking-wider shrink-0">
+                <span className="px-3 py-1.5 rounded-lg bg-green-500 text-white text-xs md:text-sm font-black uppercase tracking-wider shrink-0">
                   ÖDƏNİŞSİZ ✓
                 </span>
               </div>
@@ -121,11 +121,11 @@ export default function AboutSection() {
                     <Truck size={18} />
                   </div>
                   <div>
-                    <h5 className="font-bold text-xs text-white">Ünvana Çatdırılma</h5>
-                    <p className="text-[10px] text-white/50 mt-0.5">Bakı daxili birbaşa ünvana çatdırılma</p>
+                    <h5 className="font-bold text-sm md:text-base text-white">Ünvana Çatdırılma</h5>
+                    <p className="text-xs md:text-sm text-white/80 mt-0.5">Bakı daxili birbaşa ünvana çatdırılma</p>
                   </div>
                 </div>
-                <span className="px-3 py-1 rounded-lg bg-amber-600 text-white text-[11px] font-black uppercase tracking-wider shrink-0">
+                <span className="px-3 py-1.5 rounded-lg bg-amber-600 text-white text-xs md:text-sm font-black uppercase tracking-wider shrink-0">
                   ƏLAVƏ ÖDƏNİŞLƏ
                 </span>
               </div>
@@ -134,7 +134,7 @@ export default function AboutSection() {
 
           {/* Bottom Banner Branding Info */}
           <div className="relative z-10 mt-8 pt-5 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4">
-            <div className="flex gap-4 text-xs font-bold text-white/90 uppercase tracking-widest">
+            <div className="flex gap-4 text-sm font-bold text-white/90 uppercase tracking-widest">
               <span>Təbii</span>
               <span>•</span>
               <span>Saf</span>
@@ -142,7 +142,7 @@ export default function AboutSection() {
               <span>Sağlam</span>
             </div>
 
-            <div className="flex flex-col sm:flex-row gap-2 w-full md:w-auto text-xs">
+            <div className="flex flex-col sm:flex-row gap-2 w-full md:w-auto text-sm">
               <a 
                 href="tel:0706774407" 
                 className="flex items-center justify-center gap-2 p-2.5 px-4 rounded-xl bg-white/5 hover:bg-white/10 text-white transition-colors w-full sm:w-auto"

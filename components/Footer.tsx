@@ -26,7 +26,7 @@ export default function Footer() {
               </span>
             </div>
             <p className="text-sm leading-relaxed" style={{ color: 'rgba(255,255,255,0.62)' }}>
-              Tovuz kəndindən gələn ən təbii, ən təmiz məhsullar. Hər məhsulda bir nəslin zəhməti var.
+              Kənd toyuğu yumurtasından tutmuş dağ balına — hər məhsul Tovuz dağlarından birbaşa sizin süfrənizə çatır.
             </p>
           </div>
 
@@ -102,7 +102,7 @@ export default function Footer() {
           style={{ borderColor: 'rgba(255,255,255,0.10)' }}
         >
           <p className="text-xs" style={{ color: 'rgba(255,255,255,0.40)' }}>
-            © 2024 Atam Evi. Bütün hüquqlar qorunur.
+            © 2026 Atam Evi. Bütün hüquqlar qorunur.
           </p>
           <div className="flex gap-4">
             {['Məxfilik Siyasəti', 'İstifadə Şərtləri'].map((t) => (
