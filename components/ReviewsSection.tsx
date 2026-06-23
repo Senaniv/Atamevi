@@ -9,7 +9,7 @@ interface Review {
   role: string
   text: string
   avatar: string
-  location: string
+  location?: string
   rating: number
 }
 
