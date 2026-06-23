@@ -99,21 +99,32 @@ export default function HeroSection({ productCount }: HeroSectionProps) {
           </a>
         </div>
 
-        {/* Stats */}
-        <div className="mt-16 grid grid-cols-3 gap-6 max-w-md mx-auto">
+        {/* Clickable Promo Badges */}
+        <div className="mt-16 grid grid-cols-2 sm:grid-cols-4 gap-6 max-w-2xl mx-auto">
           {[
-            { val: `${productCount}+`, label: 'Məhsul növü' },
-            { val: '100%', label: 'Təbii' },
-            { val: '1-2 gün', label: 'Çatdırılma' },
+            { val: '100%', label: 'Təbii', link: '#products' },
+            { val: 'Tam', label: 'Gigiyenik', link: '#haqqimizda' },
+            { val: 'Yüksək', label: 'Məmnuniyyət', link: '#reviews' },
+            { val: '1-2 gün', label: 'Çatdırılma', link: '#faq' },
           ].map((s) => (
-            <div key={s.label} className="text-center">
-              <div className="text-2xl font-bold text-white font-playfair" style={{ textShadow: '0 2px 8px rgba(0,0,0,0.5)' }}>
+            <a
+              key={s.label}
+              href={s.link}
+              className="text-center group block cursor-pointer transition-transform hover:scale-105 duration-200"
+            >
+              <div
+                className="text-2xl sm:text-3xl font-bold text-white font-playfair group-hover:text-green-light transition-colors"
+                style={{ textShadow: '0 2px 8px rgba(0,0,0,0.5)' }}
+              >
                 {s.val}
               </div>
-              <div className="text-xs mt-0.5" style={{ color: 'rgba(255,255,255,0.7)', textShadow: '0 1px 4px rgba(0,0,0,0.5)' }}>
+              <div
+                className="text-xs sm:text-sm mt-0.5 font-medium underline decoration-dashed decoration-white/30 group-hover:decoration-white transition-colors"
+                style={{ color: 'rgba(255,255,255,0.75)', textShadow: '0 1px 4px rgba(0,0,0,0.5)' }}
+              >
                 {s.label}
               </div>
-            </div>
+            </a>
           ))}
         </div>
       </div>
