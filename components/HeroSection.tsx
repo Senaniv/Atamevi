@@ -70,11 +70,7 @@ export default function HeroSection({ productCount }: HeroSectionProps) {
         </h1>
 
         <p className="text-lg md:text-xl max-w-xl mx-auto mb-10 leading-relaxed" style={{ color: 'rgba(255,255,255,0.92)', textShadow: '0 2px 10px rgba(0,0,0,0.75)' }}>
-          Kənd toyuğu yumurtasından tutmuş dağ balına — hər məhsul{' '}
-          <strong className="font-semibold" style={{ color: '#c8f5b0' }}>
-            Təbii, Təmiz Kəndin ətri ilə
-          </strong>{' '}
-          Tovuz dağlarından süfrənizə çatır.
+          Kənd toyuğu yumurtasından tutmuş dağ balına — hər məhsul Təbii, Təmiz, Kəndin ətri ilə Tovuz dağlarından birbaşa süfrənizə çatır.
         </p>
 
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">

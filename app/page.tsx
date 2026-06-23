@@ -114,7 +114,9 @@ export default function Home() {
       <Navbar cartCount={cart.reduce((a, c) => a + c.qty, 0)} />
       <HeroSection productCount={products.length || 9} />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-32">
-        <DeliveryBanner />
+        <div id="delivery">
+          <DeliveryBanner />
+        </div>
         <SearchBar value={search} onChange={setSearch} />
 
         {/* Category Filters */}
