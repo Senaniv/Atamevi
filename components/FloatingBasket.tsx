@@ -143,7 +143,7 @@ export default function FloatingBasket({ cart, onUpdateQty, onClear }: FloatingB
                         <p className="font-semibold text-sm text-gray-800 truncate">
                           {item.title}
                         </p>
-                        <p className="text-xs font-bold text-brown" style={{ fontFamily: "'Playfair Display', serif" }}>
+                        <p className="text-xs font-bold text-brown font-playfair">
                           {(item.price * item.qty).toFixed(2)} AZN
                         </p>
                       </div>
@@ -233,8 +233,7 @@ export default function FloatingBasket({ cart, onUpdateQty, onClear }: FloatingB
           <span>{showCheckout ? 'Səbətə Qayıt' : 'Hörmə Səbət'}</span>
           {hasItems && !showCheckout && (
             <span
-              className="font-bold text-xs px-2 py-0.5 rounded-full bg-white/20"
-              style={{ fontFamily: "'Playfair Display', serif" }}
+              className="font-bold text-xs px-2 py-0.5 rounded-full bg-white/20 font-playfair"
             >
               {totalItemsPrice.toFixed(2)} ₼
             </span>
@@ -329,7 +328,7 @@ export default function FloatingBasket({ cart, onUpdateQty, onClear }: FloatingB
                         <p className="text-[11px] text-gray-400 mt-0.5">Bakı və Tovuz daxili qapıya təslim</p>
                       </div>
                     </div>
-                    <span className="text-xs font-bold text-brown" style={{ fontFamily: "'Playfair Display', serif" }}>+3.00 AZN</span>
+                    <span className="text-xs font-bold text-brown">+3.00 AZN</span>
                   </label>
 
                   <label
@@ -361,15 +360,15 @@ export default function FloatingBasket({ cart, onUpdateQty, onClear }: FloatingB
               <div className="bg-cream p-4 rounded-2xl border border-green-deep/5 space-y-2">
                 <div className="flex justify-between text-xs text-gray-500">
                   <span>Məhsullar:</span>
-                  <span style={{ fontFamily: "'Playfair Display', serif" }} className="font-semibold">{totalItemsPrice.toFixed(2)} AZN</span>
+                  <span>{totalItemsPrice.toFixed(2)} AZN</span>
                 </div>
                 <div className="flex justify-between text-xs text-gray-500">
                   <span>Çatdırılma haqqı:</span>
-                  <span style={{ fontFamily: "'Playfair Display', serif" }} className="font-semibold">{deliveryCost > 0 ? `${deliveryCost.toFixed(2)} AZN` : 'Pulsuz'}</span>
+                  <span>{deliveryCost > 0 ? `${deliveryCost.toFixed(2)} AZN` : 'Pulsuz'}</span>
                 </div>
                 <div className="flex justify-between text-sm font-bold text-green-deep pt-2 border-t border-green-deep/10">
                   <span>Cəmi Ödəniləcək:</span>
-                  <span className="text-brown" style={{ fontFamily: "'Playfair Display', serif" }}>{finalTotal.toFixed(2)} AZN</span>
+                  <span className="text-brown">{finalTotal.toFixed(2)} AZN</span>
                 </div>
               </div>
 

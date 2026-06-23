@@ -4,7 +4,7 @@ import { Truck, ShieldCheck, PhoneCall } from 'lucide-react'
 
 export default function DeliveryBanner() {
   return (
-    <div id="delivery" className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-4">
+    <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-4">
       {/* Box 1: Delivery Time */}
       <div
         className="flex items-center gap-4 p-5 rounded-2xl border transition-all hover:shadow-sm"

@@ -185,8 +185,8 @@ export default function ReadyBaskets({ baskets, products, onAdd }: ReadyBasketsP
 
               <div className="flex items-center justify-between mt-5">
                 <span
-                  className="text-xs font-bold"
-                  style={{ color: '#8b5a2b', fontFamily: "'Playfair Display', serif" }}
+                  className="text-xs font-bold font-playfair"
+                  style={{ color: '#8b5a2b' }}
                 >
                   {basket.totalLabel}
                 </span>

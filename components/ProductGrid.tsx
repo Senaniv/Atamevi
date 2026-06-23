@@ -113,8 +113,8 @@ export default function ProductGrid({ products, quantities, onAdd, onUpdateQty }
               <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-1 mb-3">
                 <div>
                   <span
-                    className="text-sm sm:text-xl font-bold font-playfair"
-                    style={{ color: '#8b5a2b' }}
+                    className="text-sm sm:text-xl font-bold"
+                    style={{ color: '#8b5a2b', fontFamily: "'Playfair Display', serif" }}
                   >
                     {product.price.toFixed(2)} AZN
                   </span>
