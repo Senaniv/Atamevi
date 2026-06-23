@@ -72,9 +72,9 @@ export default function HeroSection({ productCount }: HeroSectionProps) {
         <p className="text-lg md:text-xl max-w-xl mx-auto mb-10 leading-relaxed" style={{ color: 'rgba(255,255,255,0.92)', textShadow: '0 2px 10px rgba(0,0,0,0.75)' }}>
           Kənd toyuğu yumurtasından tutmuş dağ balına — hər məhsul{' '}
           <strong className="font-semibold" style={{ color: '#c8f5b0' }}>
-            Tovuz ailələrindən
+            Təbii, Təmiz Kəndin ətri ilə
           </strong>{' '}
-          bilavasitə sizin süfrənizə çatır.
+          Tovuz dağlarından süfrənizə çatır.
         </p>
 
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
@@ -105,7 +105,7 @@ export default function HeroSection({ productCount }: HeroSectionProps) {
             { val: '100%', label: 'Təbii', link: '#products' },
             { val: 'Tam', label: 'Gigiyenik', link: '#haqqimizda' },
             { val: 'Yüksək', label: 'Məmnuniyyət', link: '#reviews' },
-            { val: '1-2 gün', label: 'Çatdırılma', link: '#faq' },
+            { val: '1-2 gün', label: 'Çatdırılma', link: '#delivery' },
           ].map((s) => (
             <a
               key={s.label}
